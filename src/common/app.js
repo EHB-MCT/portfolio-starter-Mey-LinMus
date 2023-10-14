@@ -1,3 +1,5 @@
+// knexfile.js
+
 module.exports = {
     development: {
       client: 'mysql2',
@@ -8,7 +10,6 @@ module.exports = {
         database: 'dev5',
       },
       migrations: {
-        tableName: 'knex_migrations',
         directory: './db/migrations',
       },
       seeds: {

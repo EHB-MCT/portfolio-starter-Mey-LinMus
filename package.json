@@ -12,7 +12,7 @@
   "main": "src/common/index.js",
   "devDependencies": {},
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon src/common/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
