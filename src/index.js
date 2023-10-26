@@ -1,7 +1,7 @@
 const express = require('express');
 const knex = require('knex');
-const knexfile = require('./knexfile'); // Import the Knex.js configuration
-const routes = require('./routes'); // Import your routes
+const knexfile = require('./knexfile'); 
+const routes = require('./routes'); 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
