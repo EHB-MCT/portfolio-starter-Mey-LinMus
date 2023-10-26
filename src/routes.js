@@ -1,10 +1,22 @@
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
 
-
+/**
+ * Create an Express router with user-related routes.
+ *
+ * @param {Object} db - Knex.js database connection.
+ * @returns {Router} Express router with user routes.
+ */
 module.exports = (db) => {
   const router = express.Router();
 
+  /**
+   * Get a list of users.
+   *
+   * @param {Request} req - Express request object.
+   * @param {Response} res - Express response object.
+   * @returns {Promise<void>} A Promise that resolves to the user data or an error response.
+   */
   router.get("/users", async (req, res) => {
     try {
       const users = await db("users").select("*");
@@ -17,6 +29,13 @@ module.exports = (db) => {
     }
   });
 
+  /**
+   * Add a new user.
+   *
+   * @param {Request} req - Express request object with user data in the request body.
+   * @param {Response} res - Express response object.
+   * @returns {Promise<void>} A Promise that resolves to the created user data or an error response.
+   */
   router.post("/user", async (req, res) => {
     try {
       const { name, birthday, age } = req.body;
@@ -29,7 +48,13 @@ module.exports = (db) => {
     }
   });
 
-
+  /**
+   * Delete a user by ID.
+   *
+   * @param {Request} req - Express request object with the user ID as a route parameter.
+   * @param {Response} res - Express response object.
+   * @returns {Promise<void>} A Promise that resolves to a success or error response.
+   */
   router.delete("/user/:id", async (req, res) => {
     // const userId = req.params.id;
     const userId = uuidv4();
@@ -42,12 +67,17 @@ module.exports = (db) => {
       }
     } catch (error) {
       console.error(error);
-      res
-        .status(500)
-        .json({ error: "An error occurred while deleting the user." });
+      res.status(500).json({ error: "An error occurred while deleting the user." });
     }
   });
 
+  /**
+   * Update a user by ID.
+   *
+   * @param {Request} req - Express request object with the user ID as a route parameter and user data in the request body.
+   * @param {Response} res - Express response object.
+   * @returns {Promise<void>} A Promise that resolves to the updated user data or an error response.
+   */
   router.patch("/user/:id", async (req, res) => {
     const userId = req.params.id;
     const { name, birthday, age } = req.body;
@@ -60,21 +90,17 @@ module.exports = (db) => {
         return res.status(404).json({ error: "User not found." });
       }
 
-      // Create an object with the fields to update
       const updatedUser = {};
       if (name) updatedUser.name = name;
       if (birthday) updatedUser.birthday = birthday;
       if (age) updatedUser.age = age;
 
-      // Update user information
       await db("users").where({ id: userId }).update(updatedUser);
 
       res.status(200).json({ id: userId, ...updatedUser });
     } catch (error) {
       console.error(error);
-      res
-        .status(500)
-        .json({ error: "An error occurred while updating the user." });
+      res.status(500).json({ error: "An error occurred while updating the user." });
     }
   });
 
