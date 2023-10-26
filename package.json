@@ -1,28 +1,29 @@
 {
-  "dependencies": {
-    "express": "^4.18.2",
-    "knex": "^3.0.1",
-    "mysql2": "^3.6.1",
-    "node": "^20.7.0",
-    "nodemon": "^3.0.1"
-  },
-  "name": "portfolio-starter-mey-linmus",
-  "description": "",
+  "name": "src",
   "version": "1.0.0",
-  "main": "src/common/index.js",
-  "devDependencies": {},
+  "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/common/index.js",
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "knex": "^2.5.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.6.2",
+    "nodemon": "^3.0.1",
+    "pg": "^8.11.3"
+  },
+  "keywords": [],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/EHB-MCT/portfolio-starter-Mey-LinMus.git"
   },
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/EHB-MCT/portfolio-starter-Mey-LinMus/issues"
   },
-  "homepage": "https://github.com/EHB-MCT/portfolio-starter-Mey-LinMus#readme"
+  "homepage": "https://github.com/EHB-MCT/portfolio-starter-Mey-LinMus#readme",
+  "description": ""
 }
