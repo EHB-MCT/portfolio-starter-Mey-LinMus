@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "npx knex migrate:latest --cwd db/ && nodemon index.js --legacy-watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

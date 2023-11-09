@@ -1,0 +1,23 @@
+version: "3.2"
+
+services:
+  api:
+    build: ./images/api
+    ports:
+      - 8080:3000
+    volumes:
+      - ./images/api/src:/usr/app/src
+    env_file:
+      - .env
+
+  stores:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env
+
+  healthcheck:
+    test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+    timeout: 20s
+    retries: 10

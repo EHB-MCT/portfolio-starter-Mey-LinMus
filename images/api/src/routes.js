@@ -67,7 +67,9 @@ module.exports = (db) => {
       }
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "An error occurred while deleting the user." });
+      res
+        .status(500)
+        .json({ error: "An error occurred while deleting the user." });
     }
   });
 
@@ -100,7 +102,9 @@ module.exports = (db) => {
       res.status(200).json({ id: userId, ...updatedUser });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "An error occurred while updating the user." });
+      res
+        .status(500)
+        .json({ error: "An error occurred while updating the user." });
     }
   });
 
