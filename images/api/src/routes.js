@@ -1,6 +1,7 @@
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
 
+
 /**
  * Create an Express router with user-related routes.
  *
@@ -10,6 +11,7 @@ const { v4: uuidv4 } = require("uuid");
 
 module.exports = (db) => {
   const router = express.Router();
+
 
   /**
    * Get a list of users.
@@ -30,6 +32,7 @@ module.exports = (db) => {
         .json({ error: "An error occurred while fetching users." });
     }
   });
+
 
   /**
    * Add a new user.
@@ -53,6 +56,7 @@ module.exports = (db) => {
     }
   });
 
+
   /**
    * Delete a user by ID.
    *
@@ -62,14 +66,16 @@ module.exports = (db) => {
    */
 
   router.delete("/user/:id", async (req, res) => {
-    // const userId = req.params.id;
-    const userId = uuidv4();
+    const userId = req.params.id;
+    // const userId = uuidv4();
     try {
       const deletedCount = await db("users").where({ id: userId }).del();
       if (deletedCount === 0) {
         res.status(404).json({ error: "User not found." });
       } else {
-        res.status(204).end();
+        res
+          .status(200)
+          .json({ message: `User with ID ${userId} successfully deleted.` });
       }
     } catch (error) {
       console.error(error);
@@ -78,6 +84,7 @@ module.exports = (db) => {
         .json({ error: "An error occurred while deleting the user." });
     }
   });
+
 
   /**
    * Update a user by ID.
