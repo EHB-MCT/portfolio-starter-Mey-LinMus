@@ -43,8 +43,10 @@ module.exports = (db) => {
     try {
       const { name, birthday, age } = req.body;
       const userId = uuidv4();
-      await db("users").insert({ id: userId, name, birthday, age });
-      res.status(201).json({ id: userId, name, birthday, age });
+      const resp = await db("users")
+        .insert({ uuid: userId, name, birthday, age })
+        .returning();
+      res.status(200).json(resp);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "An error occurred while adding a user." });
@@ -124,11 +126,9 @@ module.exports = (db) => {
       res.json(usersWithComments);
     } catch (error) {
       console.error(error);
-      res
-        .status(500)
-        .json({
-          error: "An error occurred while fetching users with comments.",
-        });
+      res.status(500).json({
+        error: "An error occurred while fetching users with comments.",
+      });
     }
   });
 
@@ -142,11 +142,9 @@ module.exports = (db) => {
       res.json(comments);
     } catch (error) {
       console.error(error);
-      res
-        .status(500)
-        .json({
-          error: "An error occurred while fetching comments for the user.",
-        });
+      res.status(500).json({
+        error: "An error occurred while fetching comments for the user.",
+      });
     }
   });
 
@@ -175,26 +173,30 @@ module.exports = (db) => {
   router.patch("/comment/:id", async (req, res) => {
     const commentId = req.params.id;
     const { text } = req.body;
-  
+
     try {
-      const commentExists = await db("comments").where({ id: commentId }).first();
-  
+      const commentExists = await db("comments")
+        .where({ id: commentId })
+        .first();
+
       if (!commentExists) {
         return res.status(404).json({ error: "Comment not found." });
       }
-  
+
       await db("comments").where({ id: commentId }).update({ text });
-  
+
       res.status(200).json({ id: commentId, text });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "An error occurred while updating the comment." });
+      res
+        .status(500)
+        .json({ error: "An error occurred while updating the comment." });
     }
   });
-  
+
   router.delete("/comment/:id", async (req, res) => {
     const commentId = req.params.id;
-  
+
     try {
       const deletedCount = await db("comments").where({ id: commentId }).del();
       if (deletedCount === 0) {
@@ -204,10 +206,11 @@ module.exports = (db) => {
       }
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "An error occurred while deleting the comment." });
+      res
+        .status(500)
+        .json({ error: "An error occurred while deleting the comment." });
     }
   });
-  
 
   return router;
 };

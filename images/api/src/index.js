@@ -1,6 +1,6 @@
 const express = require("express");
 const knex = require("knex");
-const knexfile = require("../db/knexfile");
+const knexfile = require("../knexfile");
 const routes = require("./routes");
 
 /**
