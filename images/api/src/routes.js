@@ -45,16 +45,27 @@ module.exports = (db) => {
   router.post("/user", async (req, res) => {
     try {
       const { name, birthday, age } = req.body;
-      const userId = uuidv4();
-      const resp = await db("users")
-        .insert({ uuid: userId, name, birthday, age })
-        .returning();
-      res.status(200).json(resp);
+  
+      const existingUser = await db("users").where({ name, birthday, age }).first();
+  
+      if (existingUser) {
+
+        res.status(409).json({ error: "User already exists." });
+      } else {
+      
+        const userId = uuidv4();
+        const resp = await db("users")
+          .insert({ uuid: userId, name, birthday, age })
+          .returning();
+  
+        res.status(201).json({ message: "User added successfully.", user: resp[0] });
+      }
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "An error occurred while adding a user." });
     }
   });
+  
 
 
   /**
