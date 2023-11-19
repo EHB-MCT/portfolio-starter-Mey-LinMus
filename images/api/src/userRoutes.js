@@ -7,6 +7,7 @@ const { v4: uuidv4 } = require("uuid");
  * @param {Object} db - Knex.js database connection.
  * @returns {Router} Express router with user routes.
  */
+
 module.exports = (db) => {
   const router = express.Router();
 
@@ -17,6 +18,7 @@ module.exports = (db) => {
    * @param {Response} res - Express response object.
    * @returns {Promise<void>} A Promise that resolves to the user data or an error response.
    */
+
   router.get("/users", async (req, res) => {
     try {
       const users = await db("users").select("*");
@@ -36,12 +38,27 @@ module.exports = (db) => {
    * @param {Response} res - Express response object.
    * @returns {Promise<void>} A Promise that resolves to the created user data or an error response.
    */
+
   router.post("/user", async (req, res) => {
     try {
       const { name, birthday, age } = req.body;
-      const userId = uuidv4();
-      await db("users").insert({ id: userId, name, birthday, age });
-      res.status(201).json({ id: userId, name, birthday, age });
+
+      const existingUser = await db("users")
+        .where({ name, birthday, age })
+        .first();
+
+      if (existingUser) {
+        res.status(409).json({ error: "User already exists." });
+      } else {
+        const userId = uuidv4();
+        const resp = await db("users")
+          .insert({ uuid: userId, name, birthday, age })
+          .returning();
+
+        res
+          .status(201)
+          .json({ message: "User added successfully.", user: resp[0] });
+      }
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "An error occurred while adding a user." });
@@ -55,19 +72,24 @@ module.exports = (db) => {
    * @param {Response} res - Express response object.
    * @returns {Promise<void>} A Promise that resolves to a success or error response.
    */
+
   router.delete("/user/:id", async (req, res) => {
-    // const userId = req.params.id;
-    const userId = uuidv4();
+    const userId = req.params.id;
+    // const userId = uuidv4();
     try {
       const deletedCount = await db("users").where({ id: userId }).del();
       if (deletedCount === 0) {
         res.status(404).json({ error: "User not found." });
       } else {
-        res.status(204).end();
+        res
+          .status(200)
+          .json({ message: `User with ID ${userId} successfully deleted.` });
       }
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "An error occurred while deleting the user." });
+      res
+        .status(500)
+        .json({ error: "An error occurred while deleting the user." });
     }
   });
 
@@ -78,6 +100,7 @@ module.exports = (db) => {
    * @param {Response} res - Express response object.
    * @returns {Promise<void>} A Promise that resolves to the updated user data or an error response.
    */
+
   router.patch("/user/:id", async (req, res) => {
     const userId = req.params.id;
     const { name, birthday, age } = req.body;
@@ -100,7 +123,9 @@ module.exports = (db) => {
       res.status(200).json({ id: userId, ...updatedUser });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "An error occurred while updating the user." });
+      res
+        .status(500)
+        .json({ error: "An error occurred while updating the user." });
     }
   });
 
