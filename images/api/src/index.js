@@ -1,7 +1,8 @@
 const express = require("express");
 const knex = require("knex");
 const knexfile = require("../knexfile");
-const routes = require("./routes");
+const userRoutes = require("./userRoutes");
+const commentRoutes = require("./commentRoutes");
 
 /**
  * Start the Express server and listen on the specified port.
@@ -11,6 +12,7 @@ const routes = require("./routes");
  * @param {Function} callback - A callback function to execute when the server starts.
  * @returns {void}
  */
+
 function startServer(port, callback) {
   app.listen(port, callback);
 }
@@ -22,7 +24,9 @@ const db = knex(knexfile.development);
 
 app.use(express.json());
 
-app.use("/", routes(db));
+
+app.use("/users", userRoutes(db));
+app.use("/comments", commentRoutes(db));
 
 startServer(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
