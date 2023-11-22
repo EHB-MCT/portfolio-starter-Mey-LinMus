@@ -1,137 +1,101 @@
-# Portfolio
+# Bithday commenter 
 
- Hier vind je informatie over de ontwikkeling, endpoints en het gebruik van dit project.
-
-## Inhoudsopgave
-
-- [Portfolio](#portfolio)
-  - [Inhoudsopgave](#inhoudsopgave)
-  - [Beschrijving](#beschrijving)
-  - [Ontwikkeling](#ontwikkeling)
-  - [1: Projectafhankelijkheden installeren](#1-projectafhankelijkheden-installeren)
-  - [2: Projectafhankelijkheden installeren](#2-projectafhankelijkheden-installeren)
-- [Endpoints](#endpoints)
-  - [GET /users](#get-users)
-  - [POST /user](#post-user)
-  - [PATCH /user/:id](#patch-userid)
-  - [DELETE /user/:id](#delete-userid)
-- [Docker](#docker)
-
-## Beschrijving
-Dit project is een Node.js-applicatie met een Express.js-server en een MySQL-database. Het dient als een eenvoudig systeem voor het beheren van gebruikersgegevens via API-eindpunten. Docker wordt gebruikt om de applicatie en de database te isoleren en te draaien.
+Here you will find information on the development, endpoints and use of this project.
 
 
-## Ontwikkeling
-Dit project is ontwikkeld met behulp van Node.js en gebruikt verschillende npm-pakketten. Volg de onderstaande stappen om het project lokaal in te stellen en te draaien:
+## Purpose
 
-1. Project clonen:
+This project is application written in JavaScript  with an Express.js server and a MySQL database. 
 
-   git clone [https://github.com/EHB-MCT/portfolio-starter-Mey-LinMus.git]
+The Birthday API is designed to help users remember the birthdays of their friends and loved ones. Users can view upcoming birthdays and leave comments for each person to make their day extra special.
 
+## Features
 
-## 1: Projectafhankelijkheden installeren
+- **User Management:**
+  - Retrieve a list of users.
+  - Add a new user.
+  - Update user information.
+  - Delete a user.
 
-```bash
-npm install
-```
-
-## 2: Projectafhankelijkheden installeren
-
-```bash
-npm start
-```
+- **Comment Management:**
+  - Retrieve comments for all users.
+  - Retrieve comments for a specific user.
+  - Add a new comment for a user.
+  - Update a comment.
+  - Delete a comment.
 
 
 # Endpoints
 
-- `GET /users`: Haal een lijst op van alle gebruikers.
-- `POST /user`: Voeg een nieuwe gebruiker toe.
-- `PATCH /user/:id`: Werk een bestaande gebruiker bij op basis van de gebruikers-ID.
-- `DELETE /user/:id`: Verwijder een gebruiker op basis van de gebruikers-ID.
+## Users
 
-Hier is hoe je deze endpoints kunt gebruiken:
+### 1. GET /users
 
-## GET /users
-Haal een lijst op van alle gebruikers.
+Retrieve a list of all users.
 
-**Request:**
+### 2. POST /user
 
-GET http://localhost:3000/users
+Add a new user.
 
-**Response:**
-[
-  {
-    "id": "uuid",
-    "name": "Gebruikersnaam",
-    "birthday": "Geboortedatum",
-    "age": Leeftijd
-  },
-  // Andere gebruikers...
-]
+#### Request Body Example:
 
-
-## POST /user
-Voeg een nieuwe gebruiker toe.
-
-**Request:**
-
-POST -H "Content-Type: application/json" -d '{
-  "name": "Nieuwe Gebruiker",
-  "birthday": "Geboortedatum",
-  "age": Leeftijd
-}' http://localhost:3000/user
-
-**Response**:
 {
-  "name": "Nieuwe Gebruiker",
-  "birthday": "Geboortedatum",
-  "age": Leeftijd
+  "name": "John Doe",
+  "birthday": "YYYY-MM-DD",
+  "age": 25
 }
 
+### 3. PATCH /user/:id
 
-## PATCH /user/:id
-Werk een bestaande gebruiker bij op basis van de gebruikers-ID.
+Update user information by ID (optional).
 
-**Request:**
+#### Request Body Example:
 
-PATCH -H "Content-Type: application/json" -d '{
-  "name": "Bijgewerkte Gebruiker",
-  "birthday": "Nieuwe Geboortedatum",
-  "age": Nieuwe Leeftijd
-}' http://localhost:3000/user/nieuwe-uuid
-
-**Response:**
 {
-  "id": "nieuwe-uuid",
-  "name": "Bijgewerkte Gebruiker",
-  "birthday": "Nieuwe Geboortedatum",
-  "age": Nieuwe Leeftijd
+  "name": "Updated Name",
+  "birthday": "YYYY-MM-DD",
+  "age": 26
 }
 
+### 4. DELETE /user/:id
 
-## DELETE /user/:id
-Verwijder een gebruiker op basis van de gebruikers-ID.
-
-**Request:**
-
-DELETE http://localhost:3000/user/nieuwe-uuid
-
-**Response:**
-
-HTTP-statuscode 200 voor een succesvolle verwijdering.
+Delete a user by ID.
 
 
-# Docker
+## Comments
 
-Dit project is geconfigureerd voor gebruik met Docker. De Docker-configuratie is te vinden in het docker-compose.yml bestand.
+### 1.  GET /users-comments
 
-Voer het volgende commando uit om de Docker-containers te bouwen en te starten:
+Retrieve a list of all users with their associated comments.
 
-```bash
-docker-compose up --build
-```
+### 2.  GET /user/:id/comments
 
-Hiermee worden zowel de applicatie als de databasecontainer gestart.
+Retrieve comments for a specific user by ID.
 
-De applicatie is toegankelijk via http://localhost:8080.
+### 3. POST /user/:id/comment
 
+Add a new comment for a user by ID.
+
+#### Request Body Example:
+
+{
+  "text": "Happy Birthday! 🎉"
+}
+
+### 4. PATCH /comment/:id
+
+Update a comment by ID.
+
+#### Request Body Example:
+
+{
+  "text": "Updated comment text."
+}
+
+### 4. DELETE /comment/:id
+
+Delete a comment by ID.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
