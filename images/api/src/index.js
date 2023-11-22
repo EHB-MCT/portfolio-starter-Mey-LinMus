@@ -25,8 +25,8 @@ const db = knex(knexfile.development);
 app.use(express.json());
 
 
-app.use("/users", userRoutes(db));
-app.use("/comments", commentRoutes(db));
+app.use("", userRoutes(db));
+app.use("", commentRoutes(db));
 
 startServer(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
