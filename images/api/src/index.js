@@ -1,8 +1,8 @@
 const express = require("express");
 const knex = require("knex");
 const knexfile = require("../knexfile");
-const userRoutes = require("./userRoutes");
-const commentRoutes = require("./commentRoutes");
+const userRoutes = require("./routes/userRoutes");
+const commentRoutes = require("./routes/commentRoutes");
 
 /**
  * Start the Express server and listen on the specified port.
@@ -23,7 +23,6 @@ const PORT = process.env.PORT || 3000;
 const db = knex(knexfile.development);
 
 app.use(express.json());
-
 
 app.use("", userRoutes(db));
 app.use("", commentRoutes(db));

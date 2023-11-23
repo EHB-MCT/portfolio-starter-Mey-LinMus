@@ -17,6 +17,13 @@ function checkUserName(name) {
   return true;
 }
 
+
+function checkUserBirthday(birthday) {
+  const regex = /^\d{4}-\d{2}-\d{2}$/;
+  return regex.test(birthday);
+}
+
 module.exports = {
   checkUserName,
+  checkUserBirthday,
 };
