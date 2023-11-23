@@ -1,6 +1,7 @@
 const {
   checkUserName,
   checkUserBirthday,
+  checkUserAge,
 } = require("../helpers/endpointHelpers.js");
 
 test("check name", () => {
@@ -16,7 +17,6 @@ test("check name", () => {
 });
 
 test("check birthday", () => {
-
   expect(checkUserBirthday("1990-01-01")).toBe(true);
   expect(checkUserBirthday("2000-12-31")).toBe(true);
 
@@ -25,4 +25,12 @@ test("check birthday", () => {
   expect(checkUserBirthday("01-01-1990")).toBe(false);
   expect(checkUserBirthday("invalid")).toBe(false);
   expect(checkUserBirthday(null)).toBe(false);
+});
+
+test("check age", () => {
+  expect(checkUserAge(20)).toBe(true);
+  expect(checkUserAge(16)).toBe(false);
+  expect(checkUserAge("25")).toBe(false);
+  expect(checkUserAge(null)).toBe(false);
+  expect(checkUserAge(undefined)).toBe(false);
 });

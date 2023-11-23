@@ -23,7 +23,12 @@ function checkUserBirthday(birthday) {
   return regex.test(birthday);
 }
 
+function checkUserAge(age) {
+  return typeof age === 'number' && age >= 18 && age <= 100;
+}
+
 module.exports = {
   checkUserName,
   checkUserBirthday,
+  checkUserAge,
 };
