@@ -1,6 +1,6 @@
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
-
+const { checkUserName } = require("./helpers/endpointHelpers.js");
 
 /**
  * Create an Express router with user-related routes.
@@ -43,22 +43,25 @@ module.exports = (db) => {
   router.post("/user", async (req, res) => {
     try {
       const { name, birthday, age } = req.body;
+      if (checkUserName(name)) {
+        const existingUser = await db("users")
+          .where({ name, birthday, age })
+          .first();
 
-      const existingUser = await db("users")
-        .where({ name, birthday, age })
-        .first();
+        if (existingUser) {
+          res.status(409).json({ error: "User already exists." });
+        } else {
+          const userId = uuidv4();
+          const resp = await db("users")
+            .insert({ uuid: userId, name, birthday, age })
+            .returning();
 
-      if (existingUser) {
-        res.status(409).json({ error: "User already exists." });
+          res
+            .status(201)
+            .json({ message: "User added successfully.", user: resp[0] });
+        }
       } else {
-        const userId = uuidv4();
-        const resp = await db("users")
-          .insert({ uuid: userId, name, birthday, age })
-          .returning();
-
-        res
-          .status(201)
-          .json({ message: "User added successfully.", user: resp[0] });
+        res.status(401).send({ message: "Name not correctly formatted" });
       }
     } catch (error) {
       console.error(error);
