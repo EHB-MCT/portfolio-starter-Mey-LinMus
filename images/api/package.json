@@ -4,9 +4,11 @@
   "main": "src/index.js",
   "scripts": {
     "test-watch": "jest --watch --detectOpenHandles",
+    "prep": " npx knex migrate:latest --cwd ./src/db && npx knex seed:run --cwd ./src/db",
     "test": "jest --detectOpenHandles --forceExit",
-    "dev": " npx knex migrate:latest --cwd ./src/db && npx knex seed:run --cwd ./src/db && npm run test-watch",
-    "start": " npx knex migrate:latest --cwd ./src/db && npx knex seed:run --cwd ./src/db && node src/index.js"
+    "dev": " npm run prep && npm run test-watch",
+    "start": " npm run prep && node src/index.js",
+    "nm": "nodemon src/index.js"
   },
   "author": "",
   "license": "ISC",

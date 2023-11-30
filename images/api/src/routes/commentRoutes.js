@@ -41,7 +41,6 @@ module.exports = (db) => {
       });
     }
   });
-  µ;
 
   router.post("/user/:id/comment", async (req, res) => {
     const userId = req.params.id;

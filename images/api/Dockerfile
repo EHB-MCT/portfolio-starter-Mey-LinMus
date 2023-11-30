@@ -1,15 +1,8 @@
-FROM node:16.0-alpine
+FROM node:latest
 
-WORKDIR /usr/images/api
+WORKDIR /usr/app
 COPY package*.json .
-
+RUN git init
 RUN npm install --quiet
-COPY ./src ./src
-
-
-ENV git_work_tree=/usr/images/api/ git_dir=/usr/.git
-
-RUN apk update && \
-    apk add git
-
-CMD ["npm", "run", "dev"]
+COPY ./ ./
+CMD ["npm", "run", "start"]

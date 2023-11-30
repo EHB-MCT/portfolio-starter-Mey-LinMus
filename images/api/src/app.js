@@ -17,6 +17,8 @@ const app = express();
 
 const db = knex(knexfile.development);
 
+db.raw("SELECT 1+1").then(() => console.log("done"));
+
 app.use(express.json());
 
 app.use("", userRoutes(db));
