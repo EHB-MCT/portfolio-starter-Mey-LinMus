@@ -2,7 +2,7 @@ const {
   checkUserName,
   checkUserBirthday,
   checkUserAge,
-} = require("../helpers/endpointHelpers.js");
+} = require("../../helpers/endpointHelpers.js");
 
 test("check name", () => {
   expect(checkUserName("")).toBe(false);

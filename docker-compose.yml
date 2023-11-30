@@ -2,7 +2,7 @@ services:
   api:
     build: ./images/api
     ports:
-      - 3000:3000
+      - 3001:3000
     environment:
       NODE_ENV:
       POSTGRES_USER:
@@ -11,7 +11,10 @@ services:
       POSTGRES_HOST: db
       PORT:
     volumes:
-      - ./images/api/src:/usr/app/src
+      - ./images/api/src:/usr/images/api/src
+      - ./.git/:/usr/.git
+    tty: true
+    stdin_open: false
     depends_on:
       db:
         condition: service_healthy

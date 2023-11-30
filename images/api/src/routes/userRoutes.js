@@ -1,7 +1,10 @@
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
-const { checkUserName, checkUserBirthday,checkUserAge } = require("../helpers/endpointHelpers.js");
-
+const {
+  checkUserName,
+  checkUserBirthday,
+  checkUserAge,
+} = require("../helpers/endpointHelpers.js");
 
 /**
  * Create an Express router with user-related routes.
@@ -32,15 +35,14 @@ module.exports = (db) => {
         .json({ error: "An error occurred while fetching users." });
     }
   });
-
+  
   /**
-   * Add a new user.
+   * Add a new user to the db
    *
    * @param {Request} req - Express request object with user data in the request body.
    * @param {Response} res - Express response object.
    * @returns {Promise<void>} A Promise that resolves to the created user data or an error response.
    */
-
   router.post("/user", async (req, res) => {
     try {
       const { name, birthday, age } = req.body;

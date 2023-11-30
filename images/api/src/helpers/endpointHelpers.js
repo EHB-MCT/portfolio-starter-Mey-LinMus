@@ -17,14 +17,13 @@ function checkUserName(name) {
   return true;
 }
 
-
 function checkUserBirthday(birthday) {
   const regex = /^\d{4}-\d{2}-\d{2}$/;
   return regex.test(birthday);
 }
 
 function checkUserAge(age) {
-  return typeof age === 'number' && age >= 18 && age <= 100;
+  return typeof age === "number" && age >= 18 && age <= 100;
 }
 
 module.exports = {
