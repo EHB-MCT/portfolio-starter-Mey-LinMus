@@ -1,5 +1,10 @@
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
+const {
+  checkUserName,
+  checkUserBirthday,
+  checkUserAge,
+} = require("../helpers/endpointHelpers.js");
 
 /**
  * Create an Express router with user-related routes.
@@ -30,34 +35,45 @@ module.exports = (db) => {
         .json({ error: "An error occurred while fetching users." });
     }
   });
-
+  
   /**
-   * Add a new user.
+   * Add a new user to the db
    *
    * @param {Request} req - Express request object with user data in the request body.
    * @param {Response} res - Express response object.
    * @returns {Promise<void>} A Promise that resolves to the created user data or an error response.
    */
-
   router.post("/user", async (req, res) => {
     try {
       const { name, birthday, age } = req.body;
 
-      const existingUser = await db("users")
-        .where({ name, birthday, age })
-        .first();
+      const isNameValid = checkUserName(name);
+      const isBirthdayValid = checkUserBirthday(birthday);
+      const isAgeValid = checkUserAge(age);
 
-      if (existingUser) {
-        res.status(409).json({ error: "User already exists." });
+      if (isNameValid && isBirthdayValid && isAgeValid) {
+        const existingUser = await db("users")
+          .where({ name, birthday, age })
+          .first();
+
+        if (existingUser) {
+          res.status(409).json({ error: "User already exists." });
+        } else {
+          const userId = uuidv4();
+          const resp = await db("users")
+            .insert({ uuid: userId, name, birthday, age })
+            .returning();
+
+          res
+            .status(200)
+            .json({ message: "User added successfully.", user: resp[0] });
+        }
       } else {
-        const userId = uuidv4();
-        const resp = await db("users")
-          .insert({ uuid: userId, name, birthday, age })
-          .returning();
-
-        res
-          .status(201)
-          .json({ message: "User added successfully.", user: resp[0] });
+        if (!isNameValid) {
+          res.status(401).send({ message: "Name not correctly formatted" });
+        } else {
+          res.status(401).send({ message: "Birthday not correctly formatted" });
+        }
       }
     } catch (error) {
       console.error(error);

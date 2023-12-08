@@ -11,7 +11,6 @@ const { v4: uuidv4 } = require("uuid");
 module.exports = (db) => {
   const router = express.Router();
 
-
   router.get("/users-comments", async (req, res) => {
     try {
       const usersWithComments = await db("users")
@@ -54,9 +53,10 @@ module.exports = (db) => {
         return res.status(404).json({ error: "User not found." });
       }
 
-      const commentId = uuidv4();
-      await db("comments").insert({ id: commentId, text, user_id: userId });
-      res.status(201).json({ id: commentId, text, user_id: userId });
+      const inserted = await db("comments")
+        .insert({ text, user_id: userId })
+        .returning("id");
+      res.status(200).json({ text, user_id: userId, inserted });
     } catch (error) {
       console.error(error);
       res

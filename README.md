@@ -1,137 +1,110 @@
-# Portfolio
+# Bithday commenter
 
- Hier vind je informatie over de ontwikkeling, endpoints en het gebruik van dit project.
+Here you will find information on the development, endpoints and use of this project.
 
-## Inhoudsopgave
+## Purpose
 
-- [Portfolio](#portfolio)
-  - [Inhoudsopgave](#inhoudsopgave)
-  - [Beschrijving](#beschrijving)
-  - [Ontwikkeling](#ontwikkeling)
-  - [1: Projectafhankelijkheden installeren](#1-projectafhankelijkheden-installeren)
-  - [2: Projectafhankelijkheden installeren](#2-projectafhankelijkheden-installeren)
-- [Endpoints](#endpoints)
-  - [GET /users](#get-users)
-  - [POST /user](#post-user)
-  - [PATCH /user/:id](#patch-userid)
-  - [DELETE /user/:id](#delete-userid)
-- [Docker](#docker)
+This project is application written in JavaScript with an Express.js server and a MySQL database.
 
-## Beschrijving
-Dit project is een Node.js-applicatie met een Express.js-server en een MySQL-database. Het dient als een eenvoudig systeem voor het beheren van gebruikersgegevens via API-eindpunten. Docker wordt gebruikt om de applicatie en de database te isoleren en te draaien.
+The Birthday API is designed to help users remember the birthdays of their friends and loved ones. Users can view upcoming birthdays and leave comments for each person to make their day extra special.
+
+## Getting Started
+
+To get started with the project, follow these steps:
+
+1. Copy the `.env.template` file to a new file called `.env`.
+
+2. Run the following command to build and start the project using Docker Compose:
+   
+docker-compose up --build
 
 
-## Ontwikkeling
-Dit project is ontwikkeld met behulp van Node.js en gebruikt verschillende npm-pakketten. Volg de onderstaande stappen om het project lokaal in te stellen en te draaien:
+## Features
 
-1. Project clonen:
+- **User Management:**
 
-   git clone [https://github.com/EHB-MCT/portfolio-starter-Mey-LinMus.git]
+  - Retrieve a list of users.
+  - Add a new user.
+  - Update user information.
+  - Delete a user.
 
-
-## 1: Projectafhankelijkheden installeren
-
-```bash
-npm install
-```
-
-## 2: Projectafhankelijkheden installeren
-
-```bash
-npm start
-```
-
+- **Comment Management:**
+  - Retrieve comments for all users.
+  - Retrieve comments for a specific user.
+  - Add a new comment for a user.
+  - Update a comment.
+  - Delete a comment.
 
 # Endpoints
 
-- `GET /users`: Haal een lijst op van alle gebruikers.
-- `POST /user`: Voeg een nieuwe gebruiker toe.
-- `PATCH /user/:id`: Werk een bestaande gebruiker bij op basis van de gebruikers-ID.
-- `DELETE /user/:id`: Verwijder een gebruiker op basis van de gebruikers-ID.
+## Users
 
-Hier is hoe je deze endpoints kunt gebruiken:
+### 1. GET /users
 
-## GET /users
-Haal een lijst op van alle gebruikers.
+Retrieve a list of all users.
 
-**Request:**
+### 2. POST /user
 
-GET http://localhost:3000/users
+Add a new user.
 
-**Response:**
-[
-  {
-    "id": "uuid",
-    "name": "Gebruikersnaam",
-    "birthday": "Geboortedatum",
-    "age": Leeftijd
-  },
-  // Andere gebruikers...
-]
+#### Request Body Example:
 
-
-## POST /user
-Voeg een nieuwe gebruiker toe.
-
-**Request:**
-
-POST -H "Content-Type: application/json" -d '{
-  "name": "Nieuwe Gebruiker",
-  "birthday": "Geboortedatum",
-  "age": Leeftijd
-}' http://localhost:3000/user
-
-**Response**:
 {
-  "name": "Nieuwe Gebruiker",
-  "birthday": "Geboortedatum",
-  "age": Leeftijd
+"name": "John Doe",
+"birthday": "YYYY-MM-DD",
+"age": 25
 }
 
+### 3. PATCH /user/:id
 
-## PATCH /user/:id
-Werk een bestaande gebruiker bij op basis van de gebruikers-ID.
+Update user information by ID (optional).
 
-**Request:**
+#### Request Body Example:
 
-PATCH -H "Content-Type: application/json" -d '{
-  "name": "Bijgewerkte Gebruiker",
-  "birthday": "Nieuwe Geboortedatum",
-  "age": Nieuwe Leeftijd
-}' http://localhost:3000/user/nieuwe-uuid
-
-**Response:**
 {
-  "id": "nieuwe-uuid",
-  "name": "Bijgewerkte Gebruiker",
-  "birthday": "Nieuwe Geboortedatum",
-  "age": Nieuwe Leeftijd
+"name": "Updated Name",
+"birthday": "YYYY-MM-DD",
+"age": 26
 }
 
+### 4. DELETE /user/:id
 
-## DELETE /user/:id
-Verwijder een gebruiker op basis van de gebruikers-ID.
+Delete a user by ID.
 
-**Request:**
+## Comments
 
-DELETE http://localhost:3000/user/nieuwe-uuid
+### 1. GET /users-comments
 
-**Response:**
+Retrieve a list of all users with their associated comments.
 
-HTTP-statuscode 200 voor een succesvolle verwijdering.
+### 2. GET /user/:id/comments
 
+Retrieve comments for a specific user by ID.
 
-# Docker
+### 3. POST /user/:id/comment
 
-Dit project is geconfigureerd voor gebruik met Docker. De Docker-configuratie is te vinden in het docker-compose.yml bestand.
+Add a new comment for a user by ID.
 
-Voer het volgende commando uit om de Docker-containers te bouwen en te starten:
+#### Request Body Example:
 
-```bash
-docker-compose up --build
-```
+{
+"text": "Happy Birthday! 🎉"
+}
 
-Hiermee worden zowel de applicatie als de databasecontainer gestart.
+### 4. PATCH /comment/:id
 
-De applicatie is toegankelijk via http://localhost:8080.
+Update a comment by ID.
 
+#### Request Body Example:
+
+{
+"text": "Updated comment text."
+}
+
+### 4. DELETE /comment/:id
+
+Delete a comment by ID.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
