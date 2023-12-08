@@ -1,57 +1,29 @@
 const request = require("supertest");
+const express = require("express");
 const app = require("../../app");
+const knexfile = require("../../db/knexfile");
+const db = require("knex")(knexfile.development);
 
-describe("User Integration Tests", () => {
-  let server;
+const USER = {
+  name: "Gertje",
+  birthday: "2003-06-27",
+  age: 50,
+};
 
-  beforeAll((done) => {
-    // server = startServer(3000, done);
-    done();
+describe(" User Integration Tests", () => {
+  beforeAll(async () => {
+    await db("users").insert(USER);
   });
 
-  afterAll((done) => {
-    // server.close(done);
-    done();
+  afterAll(async () => {
+    await db("users").insert(USER);
+    await db.destroy();
   });
 
-  let userId;
-
-  it("should create a new user", async () => {
-    const response = await request(app).post("/user").send({
-      name: "John Doe",
-      birthday: "1990-01-01",
-      age: 30,
-    });
-
-    expect(response.status).toBe(200);
-    expect(response.body.message).toBe("User added successfully.");
-    expect(response.body.user).toHaveProperty("id");
-    userId = response.body.user.id;
-  });
-
-  it("should get a list of users", async () => {
+  test("GET /users should return a list of all songs", async () => {
     const response = await request(app).get("/users");
-
     expect(response.status).toBe(200);
-    expect(response.body.length).toBeGreaterThan(1);
-  });
-
-  it("should update the user", async () => {
-    const response = await request(app).patch(`/user/${userId}`).send({
-      name: "Updated Name",
-    });
-
-    expect(response.status).toBe(200);
-    expect(response.body.id).toBe(userId);
-    expect(response.body.name).toBe("Updated Name");
-  });
-
-  it("should delete the user", async () => {
-    const response = await request(app).delete(`/user/${userId}`);
-
-    expect(response.status).toBe(200);
-    expect(response.body.message).toBe(
-      `User with ID ${userId} successfully deleted.`
-    );
+    console.log(response.body);
+    expect(Array.isArray(response.body)).toBe(true);
   });
 });

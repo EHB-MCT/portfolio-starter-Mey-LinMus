@@ -2,7 +2,7 @@ services:
   api:
     build: ./images/api
     ports:
-      - 3001:3000
+      - 3000:3000
     environment:
       NODE_ENV:
       POSTGRES_USER:

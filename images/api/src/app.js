@@ -3,6 +3,7 @@ const knex = require("knex");
 const knexfile = require("./db/knexfile");
 const userRoutes = require("./routes/userRoutes");
 const commentRoutes = require("./routes/commentRoutes");
+
 /**
  * Start the Express server and listen on the specified port.
  *
