@@ -27,12 +27,11 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Run Docker Containers
-        run: |
+        run: 
           echo --- Running test cases ---
           docker-compose up --exit-code-from api
           echo --- Completed test cases ---
 
-      # Add any additional test steps if needed
 
   publish:
     needs: build
