@@ -1,4 +1,4 @@
-# Bithday commenter
+# Birthday commenter
 
 Here you will find information on the development, endpoints and use of this project.
 

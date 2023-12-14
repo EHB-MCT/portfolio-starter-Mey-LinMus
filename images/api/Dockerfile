@@ -2,6 +2,7 @@ FROM node:latest
 
 WORKDIR /usr/app
 COPY package*.json .
+RUN git init
 RUN npm install --quiet
 COPY ./ ./
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
