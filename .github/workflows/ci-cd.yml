@@ -10,35 +10,41 @@ env:
   POSTGRES_DB: test
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
 
-      - name: build docker containers
+      - name: Build Docker Containers
         run: docker-compose build
 
-      - name: run docker containers
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run Docker Containers
         run: |
           echo --- Running test cases ---
           docker-compose up --exit-code-from api
           echo --- Completed test cases ---
 
-  build:
-    needs: test
+      # Add any additional test steps if needed
+
+  publish:
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: build
-        run: docker-compose build
-
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: publish
+      - name: Publish
         run: docker-compose push
+
