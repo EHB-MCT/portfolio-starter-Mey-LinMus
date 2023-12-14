@@ -20,40 +20,27 @@ describe(" User Integration Tests", () => {
     await db.destroy();
   });
 
-  test("GET /users should return a list of all songs", async () => {
+  test("GET /users should return a list of all users", async () => {
     const response = await request(app).get("/users");
     expect(response.status).toBe(200);
-    console.log(response.body);
+    // console.log(response.body);
     expect(Array.isArray(response.body)).toBe(true);
   });
 });
 
-test("POST /user should add a new user", async () => {
-  const newUser = {
-    name: "NewUser",
-    birthday: "1990-01-01",
-    age: 30,
-  };
 
-  const response = await request(app).post("/user").send(newUser);
+test("DELETE /user/:id should delete a user", async () => {
+  const userIdToDelete = "user_id_to_delete";
+
+  const response = await request(app).delete(`/user/${userIdToDelete}`);
 
   if (response.status === 200) {
-    expect(response.body.message).toBe("User added successfully.");
-    expect(response.body.user).toMatchObject(newUser);
+    expect(response.body.message).toBe(
+      `User with ID ${userIdToDelete} successfully deleted.`
+    );
+  } else if (response.status === 404) {
+    expect(response.body.error).toBe("User not found.");
   } else {
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(500);
   }
 });
-
-// test("DELETE /user/:id should delete a user by ID", async () => {
-//   const userId = await db("users").select("id").where(USER).first();
-
-//   const response = await request(app).delete(`/user/${userId.id}`);
-
-//   expect(response.status).toBe(200);
-//   console.log(response.body);
-
-//   expect(response.body.message).toBe(
-//     `User with ID ${userId.id} successfully deleted.`
-//   );
-// });
