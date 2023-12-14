@@ -45,5 +45,5 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Publish
-        run: docker-compose push
+        run: docker-compose -f docker-compose.yml push
 
