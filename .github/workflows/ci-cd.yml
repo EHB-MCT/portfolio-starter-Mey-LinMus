@@ -13,20 +13,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      - name: Debug Workflow Context
-        run: |
-          pwd
-          ls -la
-          ls -la docker-compose*
-
-      - name: Build docker containers
+      - name: build docker containers
         run: docker-compose build
 
-      - name: Run docker containers
-        run: |
+      - name: run docker containers
+        run: 
           echo --- Running test cases ---
           docker-compose up --exit-code-from api
           echo --- Completed test cases ---
@@ -34,17 +27,11 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      - name: Debug Workflow Context
-        run: |
-          pwd
-          ls -la
-          ls -la docker-compose*
-
-      - name: Build
+      - name: build
         run: docker-compose build
 
       - name: Login to Docker Hub
@@ -53,7 +40,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Publish
+      - name: publish
         run: docker-compose.yml push
 
 
