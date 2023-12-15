@@ -5,7 +5,7 @@ const knexfile = require("../../db/knexfile");
 const db = require("knex")(knexfile.development);
 
 const USER = {
-  name: "Gertje",
+  name: "Gert",
   birthday: "2003-06-27",
   age: 50,
 };
