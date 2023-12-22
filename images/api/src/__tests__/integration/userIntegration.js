@@ -28,7 +28,6 @@ describe(" User Integration Tests", () => {
   });
 });
 
-
 test("DELETE /user/:id should delete a user", async () => {
   const userIdToDelete = "user_id_to_delete";
 
