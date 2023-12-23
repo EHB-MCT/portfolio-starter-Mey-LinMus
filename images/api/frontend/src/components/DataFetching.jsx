@@ -1,46 +1,42 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "../styles/user.css";
 
 const DataFetching = () => {
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const apiUrl = "http://localhost:3000/users";
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/users-comments"
+        );
+        setUsers(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-    fetch(apiUrl)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Data:", data);
-        setUserData(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setLoading(false);
-      });
+    fetchData();
   }, []);
 
   return (
     <div>
-      {loading && <div>Loading...</div>}
-      {error && <div>Error: {error}</div>}
-      {userData && (
-        <div>
-          {userData.map((user) => (
-            <div key={user.id}>
-              <h2>{user.name}</h2>
-              <p>{user.birthday}</p>
-              <p> {user.age}</p>
-            </div>
-          ))}
+      {users.map((user) => (
+        <div key={user.id} className="user-item">
+          <h3>{user.name}</h3>
+          <p>Birthday: {user.birthday}</p>
+          <p>Age: {user.age}</p>
+          <ul>
+            {user.comment_text ? (
+              <li>{user.comment_text}</li>
+            ) : (
+              <li>No comments yet.</li>
+            )}
+          </ul>
         </div>
-      )}
+      ))}
     </div>
   );
 };

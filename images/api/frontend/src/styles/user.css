@@ -1,0 +1,24 @@
+.user-item {
+  display: inline-block;
+  width: calc(33.33% - 20px); 
+  margin: 10px;
+  border-radius: 10px;
+  background-color: #d9afd9;
+  background-image: linear-gradient(0deg, #d9afd9 0%, #97d9e1 100%);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.user-item h3 {
+  margin-bottom: 10px;
+}
+
+.user-item ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-item li {
+  margin-top: 5px;
+}
