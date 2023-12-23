@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import DeleteUser from "./DeleteUser"; // Import the DeleteUser component
 import "../styles/user.css";
 
 const UserList = () => {
@@ -21,6 +22,13 @@ const UserList = () => {
     fetchData();
   }, []);
 
+  const handleDeleteUser = (deletedUserId) => {
+    // Update the state to remove the deleted user
+    setUsers((prevUsers) =>
+      prevUsers.filter((user) => user.id !== deletedUserId)
+    );
+  };
+
   return (
     <div>
       {users.map((user) => (
@@ -35,6 +43,8 @@ const UserList = () => {
               <li>No comments yet.</li>
             )}
           </ul>
+          {/* Use the DeleteUser component */}
+          <DeleteUser userId={user.id} onDelete={handleDeleteUser} />
         </div>
       ))}
     </div>
