@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import DeleteUser from "./DeleteUser";
 import AddUser from "./AddUser";
 import "../styles/user.css";
+
+const formatDate = (dateString) => {
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+};
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -9,10 +15,11 @@ const UserList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/users-comments");
-        const data = await response.json();
-        setUsers(data);
-        console.log(data);
+        const response = await axios.get(
+          "http://localhost:3000/users-comments"
+        );
+        setUsers(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -38,7 +45,7 @@ const UserList = () => {
       {users.map((user) => (
         <div key={user.id} className="user-item">
           <h3>{user.name}</h3>
-          <p>Birthday: {user.birthday}</p>
+          <p>Birthday: {formatDate(user.birthday)}</p>
           <p>Age: {user.age}</p>
           <ul>
             {user.comment_text ? (
