@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/user.css";
 
-const DataFetching = () => {
+const UserList = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -41,4 +41,4 @@ const DataFetching = () => {
   );
 };
 
-export default DataFetching;
+export default UserList;

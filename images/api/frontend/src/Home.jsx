@@ -1,10 +1,10 @@
 import React from "react";
-import DataFetching from "./components/DataFetching";
+import UserList from "./components/UserList";
 
 const Home = () => {
   return (
     <div>
-      <DataFetching />
+      <UserList />
     </div>
   );
 };
