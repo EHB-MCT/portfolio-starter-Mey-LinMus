@@ -50,6 +50,7 @@ const AddComment = ({ onAddComment, userId }) => {
             type="text"
             value={text}
             onChange={(e) => setText(e.target.value)}
+            placeholder="Comment"
           />
         </label>
         <motion.button

@@ -46,7 +46,6 @@ const AddUser = ({ onAddUser }) => {
     },
   };
 
-
   return (
     <div className="addUser-container">
       <h2>Add User</h2>
@@ -57,6 +56,7 @@ const AddUser = ({ onAddUser }) => {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            placeholder="Name"
           />
         </label>
         <br />
@@ -66,6 +66,7 @@ const AddUser = ({ onAddUser }) => {
             type="date"
             value={birthday}
             onChange={(e) => setBirthday(e.target.value)}
+            placeholder="Age"
           />
         </label>
         <br />

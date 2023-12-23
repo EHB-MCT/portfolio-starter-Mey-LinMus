@@ -4,6 +4,7 @@ import DeleteUser from "./DeleteUser";
 import AddUser from "./AddUser";
 import "../styles/user.css";
 import AddComment from "./AddComment";
+import SearchBar from "./SearchBar";
 
 const formatDate = (dateString) => {
   const options = { year: "numeric", month: "long", day: "numeric" };
@@ -12,6 +13,7 @@ const formatDate = (dateString) => {
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,6 +22,7 @@ const UserList = () => {
           "http://localhost:3000/users-comments"
         );
         setUsers(response.data);
+        setFilteredUsers(response.data); // Initialize filteredUsers with all users
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -33,10 +36,14 @@ const UserList = () => {
     setUsers((prevUsers) =>
       prevUsers.filter((user) => user.id !== deletedUserId)
     );
+    setFilteredUsers((prevFilteredUsers) =>
+      prevFilteredUsers.filter((user) => user.id !== deletedUserId)
+    );
   };
 
   const handleAddUser = (newUser) => {
     setUsers((prevUsers) => [...prevUsers, newUser]);
+    setFilteredUsers((prevFilteredUsers) => [...prevFilteredUsers, newUser]);
   };
 
   const handleAddComment = ({ user_id, text, inserted }) => {
@@ -50,13 +57,30 @@ const UserList = () => {
           : user
       )
     );
+    setFilteredUsers((prevFilteredUsers) =>
+      prevFilteredUsers.map((user) =>
+        user.id === user_id
+          ? {
+              ...user,
+              comment_text: text,
+            }
+          : user
+      )
+    );
+  };
+
+  const handleSearch = (searchTerm) => {
+    const filtered = users.filter((user) =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredUsers(filtered);
   };
 
   return (
     <div>
       <AddUser onUserAdded={handleAddUser} />
-
-      {users.map((user) => (
+      <SearchBar onSearch={handleSearch} />
+      {filteredUsers.map((user) => (
         <div key={user.id} className="user-item">
           <h3>{user.name}</h3>
           <p>Birthday: {formatDate(user.birthday)}</p>
