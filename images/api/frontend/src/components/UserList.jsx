@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import DeleteUser from "./DeleteUser"; 
+import DeleteUser from "./DeleteUser";
+import AddUser from "./AddUser";
 import "../styles/user.css";
 
 const UserList = () => {
@@ -9,11 +9,10 @@ const UserList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/users-comments"
-        );
-        setUsers(response.data);
-        console.log(response.data);
+        const response = await fetch("http://localhost:3000/users-comments");
+        const data = await response.json();
+        setUsers(data);
+        console.log(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -28,8 +27,14 @@ const UserList = () => {
     );
   };
 
+  const handleAddUser = (newUser) => {
+    setUsers((prevUsers) => [...prevUsers, newUser]);
+  };
+
   return (
     <div>
+      <AddUser onUserAdded={handleAddUser} />
+
       {users.map((user) => (
         <div key={user.id} className="user-item">
           <h3>{user.name}</h3>
@@ -42,7 +47,7 @@ const UserList = () => {
               <li>No comments yet.</li>
             )}
           </ul>
-      
+
           <DeleteUser userId={user.id} onDelete={handleDeleteUser} />
         </div>
       ))}
