@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
+import "../styles/user.css";
 
 const AddUser = ({ onAddUser }) => {
   const [name, setName] = useState("");
@@ -23,14 +25,12 @@ const AddUser = ({ onAddUser }) => {
         const data = await response.json();
         onAddUser(data.user);
 
-        // Clear the input fields after successful user addition
         setName("");
         setBirthday("");
         setAge("");
       } else {
         console.error("Error adding user:", response.statusText);
 
-        // Log the specific error message from the server response
         const errorData = await response.json();
         console.error("Server responded with:", errorData);
       }
@@ -39,12 +39,19 @@ const AddUser = ({ onAddUser }) => {
     }
   };
 
+  const buttonVariants = {
+    hover: {
+      scale: 1.1,
+      transition: { duration: 0.3 },
+    },
+  };
+
   return (
-    <div>
+    <div className="addUser-container">
       <h2>Add User</h2>
       <form>
         <label>
-          Name:
+          <b> Name:</b>
           <input
             type="text"
             value={name}
@@ -53,7 +60,7 @@ const AddUser = ({ onAddUser }) => {
         </label>
         <br />
         <label>
-          Birthday:
+          <b>Birthday:</b>
           <input
             type="text"
             value={birthday}
@@ -62,7 +69,7 @@ const AddUser = ({ onAddUser }) => {
         </label>
         <br />
         <label>
-          Age:
+          <b>Age:</b>
           <input
             type="number"
             value={age}
@@ -70,9 +77,14 @@ const AddUser = ({ onAddUser }) => {
           />
         </label>
         <br />
-        <button type="button" onClick={handleAddUser}>
+        <motion.button
+          type="button"
+          onClick={handleAddUser}
+          variants={buttonVariants}
+          whileHover="hover"
+        >
           Add User
-        </button>
+        </motion.button>
       </form>
     </div>
   );
