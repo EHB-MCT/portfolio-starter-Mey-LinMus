@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import NumberFormat from "react-number-format";
 import "../styles/user.css";
 
 const AddUser = ({ onAddUser }) => {
@@ -47,12 +46,6 @@ const AddUser = ({ onAddUser }) => {
     },
   };
 
-  const formatDate = (value) => {
-    const year = value.slice(0, 4);
-    const month = value.slice(4, 6);
-    const day = value.slice(6, 8);
-    return `${year}-${month}-${day}`;
-  };
 
   return (
     <div className="addUser-container">
