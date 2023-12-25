@@ -1,21 +1,25 @@
 import React from "react";
 import "../styles/user.css";
 
-const DeleteUser = ({ userId, onDelete }) => {
-  const handleDelete = async () => {
+const DeleteUser = ({ userId, setUsers }) => {
+  const handleDeleteUser = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/user/${userId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-      
-        },
-      });
 
-      if (response.ok) {
-        onDelete(userId);
+      const deleteResponse = await fetch(
+        `http://localhost:3000/user/${userId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (deleteResponse.ok) {
+      
+        setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
       } else {
-        console.error("Error deleting user:", response.statusText);
+        console.error("Error deleting user:", deleteResponse.statusText);
       }
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -23,7 +27,7 @@ const DeleteUser = ({ userId, onDelete }) => {
   };
 
   return (
-    <button onClick={handleDelete} className="deleteButton">
+    <button onClick={handleDeleteUser} className="deleteButton">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="20"
