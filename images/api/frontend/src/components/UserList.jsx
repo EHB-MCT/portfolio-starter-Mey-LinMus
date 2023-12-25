@@ -4,7 +4,6 @@ import DeleteUser from "./DeleteUser";
 import AddUser from "./AddUser";
 import "../styles/user.css";
 import AddComment from "./AddComment";
-import SearchBar from "./SearchBar";
 
 const formatDate = (dateString) => {
   const options = { year: "numeric", month: "long", day: "numeric" };
@@ -22,7 +21,7 @@ const UserList = () => {
           "http://localhost:3000/users-comments"
         );
         setUsers(response.data);
-        setFilteredUsers(response.data); // Initialize filteredUsers with all users
+        setFilteredUsers(response.data);
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -69,17 +68,10 @@ const UserList = () => {
     );
   };
 
-  const handleSearch = (searchTerm) => {
-    const filtered = users.filter((user) =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredUsers(filtered);
-  };
-
   return (
     <div>
       <AddUser onUserAdded={handleAddUser} />
-      <SearchBar onSearch={handleSearch} />
+
       {filteredUsers.map((user) => (
         <div key={user.id} className="user-item">
           <h3>{user.name}</h3>

@@ -8,7 +8,7 @@ const DeleteUser = ({ userId, onDelete }) => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          // Add any additional headers if needed
+      
         },
       });
 
