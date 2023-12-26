@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import "../styles/user.css";
+import Cleave from "cleave.js/react";
+import "cleave.js/dist/addons/cleave-phone.us";
 
 const AddUser = ({ onAddUser }) => {
   const [name, setName] = useState("");
@@ -82,9 +84,13 @@ const AddUser = ({ onAddUser }) => {
         <br />
         <label>
           <b>Birthday:</b>
-          <input
+          <Cleave
+            options={{
+              date: true,
+              delimiter: "-",
+              datePattern: ["Y", "m", "d"],
+            }}
             type="text"
-            pattern="\d{4}-\d{2}-\d{2}"
             value={birthday}
             onChange={(e) => setBirthday(e.target.value)}
             placeholder="yyyy-mm-dd"
