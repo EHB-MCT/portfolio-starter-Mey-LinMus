@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import "../styles/user.css";
 
@@ -6,6 +6,16 @@ const AddUser = ({ onAddUser }) => {
   const [name, setName] = useState("");
   const [birthday, setBirthday] = useState("");
   const [age, setAge] = useState("");
+
+  useEffect(() => {
+    // Calculate age based on the selected birthday
+    if (birthday) {
+      const today = new Date();
+      const birthDate = new Date(birthday);
+      const ageCalculation = today.getFullYear() - birthDate.getFullYear();
+      setAge(ageCalculation.toString());
+    }
+  }, [birthday]);
 
   const handleAddUser = async () => {
     try {
@@ -51,7 +61,7 @@ const AddUser = ({ onAddUser }) => {
       <h2>Add User</h2>
       <form>
         <label>
-          <b> Name:</b>
+          <b>Name:</b>
           <input
             type="text"
             value={name}
@@ -73,9 +83,10 @@ const AddUser = ({ onAddUser }) => {
         <label>
           <b>Age:</b>
           <input
-            type="number"
+            type="text"
             value={age}
             onChange={(e) => setAge(e.target.value)}
+            disabled // Disable direct editing of age
           />
         </label>
         <br />
