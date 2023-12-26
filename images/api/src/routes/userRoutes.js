@@ -57,7 +57,7 @@ module.exports = (db) => {
           .first();
 
         if (existingUser) {
-          res.status(409).json({ error: "User already exists." });
+          res.status(400).json({ error: "User already exists." });
         } else {
           const userId = uuidv4();
           const resp = await db("users")
@@ -70,9 +70,9 @@ module.exports = (db) => {
         }
       } else {
         if (!isNameValid) {
-          res.status(401).send({ message: "Name not correctly formatted" });
+          res.status(400).send({ message: "Name not correctly formatted" });
         } else {
-          res.status(401).send({ message: "Birthday not correctly formatted" });
+          res.status(400).send({ message: "Birthday not correctly formatted" });
         }
       }
     } catch (error) {
@@ -93,11 +93,10 @@ module.exports = (db) => {
     const userId = req.params.id;
 
     try {
-    
       const userExists = await db("users").where({ id: userId }).first();
 
       if (!userExists) {
-        return res.status(404).json({ error: "User not found." });
+        return res.status(400).json({ error: "User not found." });
       }
 
       await db.transaction(async (trx) => {
@@ -106,7 +105,7 @@ module.exports = (db) => {
         await trx("users").where({ id: userId }).del();
       });
 
-      res.status(204).end();
+      res.status(200).end();
     } catch (error) {
       console.error(error);
       res
@@ -132,7 +131,7 @@ module.exports = (db) => {
       const userExists = await db("users").where({ id: userId }).first();
 
       if (!userExists) {
-        return res.status(404).json({ error: "User not found." });
+        return res.status(400).json({ error: "User not found." });
       }
 
       const updatedUser = {};

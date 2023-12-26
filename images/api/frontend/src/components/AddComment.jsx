@@ -21,7 +21,7 @@ const AddComment = ({ onAddComment, userId }) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Comment added successfully:", data);
+        // console.log("Comment added successfully:", data);
         onAddComment(data);
         setText("");
       } else {
