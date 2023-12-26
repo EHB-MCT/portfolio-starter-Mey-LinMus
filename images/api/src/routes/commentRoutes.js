@@ -15,7 +15,10 @@ module.exports = (db) => {
     try {
       const usersWithComments = await db("users")
         .leftJoin("comments", "users.id", "comments.user_id")
-        .select("users.*", "comments.text as comment_text");
+        .select("users.id", "users.name", "users.birthday", "users.age")
+        .groupBy("users.id")
+        .orderBy("users.id")
+        .select(db.raw("ARRAY_AGG(comments.text) as comments"));
 
       res.json(usersWithComments);
     } catch (error) {

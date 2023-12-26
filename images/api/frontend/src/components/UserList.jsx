@@ -80,8 +80,10 @@ const UserList = () => {
           <p>Birthday: {formatDate(user.birthday)}</p>
           <p>Age: {user.age}</p>
           <ul className="comments">
-            {user.comment_text ? (
-              <li>{user.comment_text}</li>
+            {user.comments && user.comments.length > 0 ? (
+              user.comments.map((comment, index) => (
+                <li key={index}>{comment}</li>
+              ))
             ) : (
               <li>No comments yet.</li>
             )}
