@@ -41,7 +41,6 @@ body {
   display: flex;
 }
 
-
 /* Adding user css */
 
 .addUser-container {
@@ -108,4 +107,14 @@ body {
   padding: 3px 6px;
   font-size: 13px;
   margin-left: 5px;
+}
+
+.message {
+  font-weight: bold;
+  text-align: center;
+  background-color: aliceblue;
+  width: fit-content;
+  padding: 5px 5px;
+  border-radius: 10px;
+  position: absolute;
 }

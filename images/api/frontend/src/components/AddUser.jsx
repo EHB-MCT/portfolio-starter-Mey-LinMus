@@ -67,7 +67,7 @@ const AddUser = ({ onAddUser }) => {
     <div className="addUser-container">
       <h2>Add User</h2>
       {message && (
-        <p style={{ color: message.type === "success" ? "green" : "red" }}>
+        <p style={{ color: message.type === "success" ? "green" : "red" }} className="message">
           {message.text}
         </p>
       )}
