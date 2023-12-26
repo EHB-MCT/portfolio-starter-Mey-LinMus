@@ -4,7 +4,6 @@ import "../styles/comment.css";
 
 const AddComment = ({ onAddComment, userId }) => {
   const [text, setText] = useState("");
-
   const handleAddComment = async () => {
     try {
       const response = await fetch(
@@ -22,6 +21,7 @@ const AddComment = ({ onAddComment, userId }) => {
 
       if (response.ok) {
         const data = await response.json();
+        console.log("Comment added successfully:", data);
         onAddComment(data);
         setText("");
       } else {
