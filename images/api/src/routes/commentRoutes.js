@@ -78,7 +78,7 @@ module.exports = (db) => {
         .first();
 
       if (!commentExists) {
-        return res.status(404).json({ error: "Comment not found." });
+        return res.status(400).json({ error: "Comment not found." });
       }
 
       await db("comments").where({ id: commentId }).update({ text });
@@ -98,9 +98,9 @@ module.exports = (db) => {
     try {
       const deletedCount = await db("comments").where({ id: commentId }).del();
       if (deletedCount === 0) {
-        res.status(404).json({ error: "Comment not found." });
+        res.status(400).json({ error: "Comment not found." });
       } else {
-        res.status(204).end();
+        res.status(200).end();
       }
     } catch (error) {
       console.error(error);

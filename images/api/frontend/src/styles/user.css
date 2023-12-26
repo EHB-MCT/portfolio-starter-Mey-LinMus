@@ -92,7 +92,12 @@ body {
   font-size: 16px;
 }
 
-.comments {
+.comments li {
   background-color: aliceblue;
-  border-radius: 30px;
+  border-radius: 10px;
+  height: 20px;
+  display: inline-block;
+  padding: 3px 6px;
+  font-size: 13px;
+  margin-left: 5px;
 }
