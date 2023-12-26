@@ -76,7 +76,10 @@ const UserList = () => {
 
       {users.map((user) => (
         <div key={user.id} className="user-item">
-          <h3>{user.name}</h3>
+          <div className="header-card">
+            <h3>{user.name}</h3>
+            <DeleteUser userId={user.id} onDelete={handleDeleteUser} />
+          </div>
           <p>Birthday: {formatDate(user.birthday)}</p>
           <p>Age: {user.age}</p>
           <ul className="comments">
@@ -89,7 +92,6 @@ const UserList = () => {
             )}
           </ul>
           <AddComment onAddComment={handleAddComment} userId={user.id} />
-          <DeleteUser userId={user.id} onDelete={handleDeleteUser} />
         </div>
       ))}
     </div>

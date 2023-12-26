@@ -32,6 +32,17 @@ body {
   border: none;
   margin-top: 20px;
   cursor: pointer;
+  position: relative;
+  left: 75%;
+  bottom: 15px;
+}
+
+.header-card {
+  display: flex;
+}
+
+.header-card h3 {
+  margin-left: 10px;
 }
 
 /* Adding user css */
