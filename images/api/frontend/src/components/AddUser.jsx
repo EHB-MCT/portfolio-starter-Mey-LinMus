@@ -6,6 +6,7 @@ const AddUser = ({ onAddUser }) => {
   const [name, setName] = useState("");
   const [birthday, setBirthday] = useState("");
   const [age, setAge] = useState("");
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     // Calculate age based on the selected birthday
@@ -38,14 +39,18 @@ const AddUser = ({ onAddUser }) => {
         setName("");
         setBirthday("");
         setAge("");
+        setMessage({ type: "success", text: "User added successfully." });
       } else {
         console.error("Error adding user:", response.statusText);
 
         const errorData = await response.json();
         console.error("Server responded with:", errorData);
+
+        setMessage({ type: "error", text: "Failed to add user." });
       }
     } catch (error) {
       console.error("Error adding user:", error);
+      setMessage({ type: "error", text: "An unexpected error occurred." });
     }
   };
 
@@ -59,6 +64,11 @@ const AddUser = ({ onAddUser }) => {
   return (
     <div className="addUser-container">
       <h2>Add User</h2>
+      {message && (
+        <p style={{ color: message.type === "success" ? "green" : "red" }}>
+          {message.text}
+        </p>
+      )}
       <form>
         <label>
           <b>Name:</b>

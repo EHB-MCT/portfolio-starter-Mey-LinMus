@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import DeleteUser from "./DeleteUser";
 import AddUser from "./AddUser";
 import "../styles/user.css";
@@ -16,11 +15,10 @@ const UserList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/users-comments"
-        );
-        setUsers(response.data);
-        console.log(response.data);
+        const response = await fetch("http://localhost:3000/users-comments");
+        const data = await response.json();
+        setUsers(data);
+        console.log(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -35,8 +33,28 @@ const UserList = () => {
     );
   };
 
-  const handleAddUser = (newUser) => {
-    setUsers((prevUsers) => [...prevUsers, newUser]);
+  const handleAddUser = async (newUser) => {
+    try {
+      const response = await fetch("http://localhost:3000/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUser),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUsers((prevUsers) => [...prevUsers, data.user]);
+      } else {
+        console.error("Error adding user:", response.statusText);
+
+        const errorData = await response.json();
+        console.error("Server responded with:", errorData);
+      }
+    } catch (error) {
+      console.error("Error adding user:", error);
+    }
   };
 
   const handleAddComment = ({ user_id, text, inserted }) => {
@@ -54,7 +72,7 @@ const UserList = () => {
 
   return (
     <div>
-      <AddUser onUserAdded={handleAddUser} />
+      <AddUser onAddUser={handleAddUser} />
 
       {users.map((user) => (
         <div key={user.id} className="user-item">
