@@ -2,6 +2,23 @@ body {
   font-family: "Oxygen", sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #d6d6d6;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d9afd9;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #97d9e1;
+}
+
 .user-item {
   display: inline-block;
   width: calc(33.33% - 20px);

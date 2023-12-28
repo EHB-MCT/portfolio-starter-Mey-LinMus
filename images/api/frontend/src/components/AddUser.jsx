@@ -42,6 +42,7 @@ const AddUser = ({ onAddUser }) => {
         setBirthday("");
         setAge("");
         setMessage({ type: "success", text: "User added successfully." });
+        window.location.reload();
       } else {
         console.error("Error adding user:", response.statusText);
 
@@ -67,7 +68,10 @@ const AddUser = ({ onAddUser }) => {
     <div className="addUser-container">
       <h2>Add User</h2>
       {message && (
-        <p style={{ color: message.type === "success" ? "green" : "red" }} className="message">
+        <p
+          style={{ color: message.type === "success" ? "green" : "red" }}
+          className="message"
+        >
           {message.text}
         </p>
       )}

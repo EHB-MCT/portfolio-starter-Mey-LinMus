@@ -46,6 +46,7 @@ const UserList = () => {
       if (response.ok) {
         const data = await response.json();
         setUsers((prevUsers) => [...prevUsers, data.user]);
+
       } else {
         console.error("Error adding user:", response.statusText);
 

@@ -12,7 +12,6 @@ const AddComment = ({ onAddComment, userId }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-
           },
           body: JSON.stringify({
             text,
@@ -24,6 +23,7 @@ const AddComment = ({ onAddComment, userId }) => {
         // console.log("Comment added successfully:", data);
         onAddComment(data);
         setText("");
+        window.location.reload();
       } else {
         console.error("Error adding comment:", response.statusText);
 

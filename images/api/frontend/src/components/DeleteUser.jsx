@@ -4,7 +4,6 @@ import "../styles/user.css";
 const DeleteUser = ({ userId, setUsers }) => {
   const handleDeleteUser = async () => {
     try {
-
       const deleteResponse = await fetch(
         `http://localhost:3000/user/${userId}`,
         {
@@ -16,8 +15,8 @@ const DeleteUser = ({ userId, setUsers }) => {
       );
 
       if (deleteResponse.ok) {
-      
         setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+        window.location.reload();
       } else {
         console.error("Error deleting user:", deleteResponse.statusText);
       }
