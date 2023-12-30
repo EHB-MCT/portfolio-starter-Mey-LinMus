@@ -1,14 +1,16 @@
-name: Remove Runs
-
+name: Remove Previous Runs
 on:
-  schedule:
-    - cron: "0 0 * * *"
+  workflow_run:
+    types:
+      - deleted
 
 jobs:
   cleanup:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Remove runs
-      run: gh run list -L 50 -s completed -q "workflow:Test" | xargs gh run delete
-
+      - name: Cleanup Previous Runs
+        run: |
+          echo "Cleaning up previous runs..."
+          curl -X DELETE -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}"
