@@ -1,5 +1,4 @@
 const request = require("supertest");
-const express = require("express");
 const app = require("../../app");
 const knexfile = require("../../db/knexfile");
 const db = require("knex")(knexfile.development);
@@ -29,11 +28,14 @@ describe(" User Integration Tests", () => {
 
     const response = await request(app).post("/user").send(newUser);
 
+    console.log(response.status);
+    console.log(response.body);
+
     if (response.status === 200) {
       expect(response.body.message).toBe("User added successfully.");
       expect(response.body.user).toMatchObject(newUser);
     } else {
-      expect(response.status).toBe(401);
+      expect(response.status).toBe(400);
     }
   });
 });

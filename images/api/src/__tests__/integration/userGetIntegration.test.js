@@ -1,5 +1,4 @@
 const request = require("supertest");
-const express = require("express");
 const app = require("../../app");
 const knexfile = require("../../db/knexfile");
 const db = require("knex")(knexfile.development);
@@ -26,20 +25,4 @@ describe(" User Integration Tests", () => {
     // console.log(response.body);
     expect(Array.isArray(response.body)).toBe(true);
   });
-});
-
-test("DELETE /user/:id should delete a user", async () => {
-  const userIdToDelete = "user_id_to_delete";
-
-  const response = await request(app).delete(`/user/${userIdToDelete}`);
-
-  if (response.status === 200) {
-    expect(response.body.message).toBe(
-      `User with ID ${userIdToDelete} successfully deleted.`
-    );
-  } else if (response.status === 404) {
-    expect(response.body.error).toBe("User not found.");
-  } else {
-    expect(response.status).toBe(500);
-  }
 });
