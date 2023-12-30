@@ -1,5 +1,4 @@
 const request = require("supertest");
-const express = require("express");
 const app = require("../../app");
 const knexfile = require("../../db/knexfile");
 const db = require("knex")(knexfile.development);

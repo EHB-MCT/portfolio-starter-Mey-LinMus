@@ -8,7 +8,7 @@ const COMMENT = {
   user_id: 229,
 };
 
-describe("User Integration Tests", () => {
+describe("Comment Integration Tests", () => {
   beforeAll(async () => {
     try {
       await db("users").insert({
@@ -16,32 +16,33 @@ describe("User Integration Tests", () => {
         birthday: "2003-06-27",
         age: 50,
       });
-
-      await db("comments").insert(COMMENT);
     } catch (error) {
-      console.error("Error during beforeAll comment:", error);
+      console.error("Error during beforeAll user:", error);
     }
   });
 
   afterAll(async () => {
     try {
-      const commentsBeforeDeletion = await db("comments").select("*");
-      console.log("Comments before deletion:", commentsBeforeDeletion);
-
       await db("comments").del();
       await db("users").del();
       await db.destroy();
     } catch (error) {
-      console.error("Error during afterAll comment:", error);
+      console.error("Error during afterAll user:", error);
     }
   });
 
-  test("GET /users-comments should return a list of users with comments", async () => {
+  test("POST /user/:id/comment should add a comment to a user", async () => {
     try {
-      const response = await request(app).get("/users-comments");
-      console.log("Response body comments:", response.body);
+      const userId = 688;
+
+      const response = await request(app)
+        .post(`/user/${userId}/comment`)
+        .send({ text: COMMENT.comment_text });
+
       expect(response.status).toBe(200);
-      expect(Array.isArray(response.body)).toBe(true);
+      expect(response.body).toHaveProperty("text", COMMENT.comment_text);
+      expect(response.body).toHaveProperty("user_id", userId);
+      expect(response.body).toHaveProperty("inserted");
     } catch (error) {
       console.error("Error during test:", error);
     }
