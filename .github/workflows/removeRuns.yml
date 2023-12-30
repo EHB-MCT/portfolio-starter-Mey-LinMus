@@ -1,15 +1,17 @@
-name: Remove Previous Runs
+name: Remove Runs
+
 on:
   schedule:
-    - cron: '0 0 * * *'  # Run daily at midnight
+    - cron: "0 0 * * *"
 
 jobs:
-  cleanup:
+  remove_runs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Cleanup Previous Runs
-        run: |
-          echo "Cleaning up previous runs..."
-          curl -X DELETE -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+      - name: Remove Docker Containers
+        run: docker ps -a -q | xargs docker rm -f || true
+
+      - name: Remove Docker Images
+        run: docker images -q | xargs docker rmi -f || true
+
