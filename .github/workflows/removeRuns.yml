@@ -1,8 +1,7 @@
 name: Remove Previous Runs
 on:
-  workflow_run:
-    types:
-      - deleted
+  schedule:
+    - cron: '0 0 * * *'  # Run daily at midnight
 
 jobs:
   cleanup:
