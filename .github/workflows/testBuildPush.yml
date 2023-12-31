@@ -17,7 +17,7 @@ jobs:
         run: docker-compose -f docker-compose.test.yml build
 
       - name: Run Tests
-        run: docker-compose -f docker-compose.test.yml run api npm run test-watch
+        run: docker-compose -f docker-compose.test.yml npm run test
 
       - name: Set up Docker Compose for Production
         run: docker-compose -f docker-compose.production.yml build
