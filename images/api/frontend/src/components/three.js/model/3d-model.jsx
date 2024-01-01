@@ -14,7 +14,7 @@ const BirthdayModel = (props) => {
   const { nodes, materials } = useGLTF("model/3d-model.glb");
   return (
     <group {...props} dispose={null}>
-      <group rotation={[-Math.PI / 2, 0, 0]} scale={2.084}>
+      <group rotation={[-Math.PI / 2.2, 0, 0]} scale={5}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group
             position={[0.195, 0.241, 0.081]}
@@ -58,13 +58,7 @@ const BirthdayModel = (props) => {
               position={[-230.439, 55.495, -519.093]}
             />
           </group>
-          <mesh
-            geometry={nodes.Object_4.geometry}
-            material={materials.Material_1}
-            position={[0, 0.04, 0]}
-            rotation={[-Math.PI / 2, 0, 0]}
-            scale={0.001}
-          />
+
           <mesh
             geometry={nodes.Object_6.geometry}
             material={materials.Material_1_1}

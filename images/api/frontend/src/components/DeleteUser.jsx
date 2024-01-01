@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/user.css";
+import "../styles/home.css";
 
 const DeleteUser = ({ userId, setUsers }) => {
   const handleDeleteUser = async () => {

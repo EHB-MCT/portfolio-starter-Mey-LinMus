@@ -1,16 +1,30 @@
 import React from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stars } from "@react-three/drei";
-import Model from "./model/3d-model"; 
+import { OrbitControls } from "@react-three/drei";
+import Model from "./model/3d-model";
 
 function CanvasContainer() {
   return (
-    <Canvas>
-      <OrbitControls />
-      <ambientLight intensity={1.0} />
-      <Stars />
-      <spotLight position={[10, 15, 10]} angle={0.3} />
-      <Model />
+    <Canvas
+      style={{
+        width: "100%",
+        height: "120%",
+        backgroundColor: "#d9afd9",
+        backgroundImage: "linear-gradient(0deg, #d9afd9 0%, #97d9e1 100%)",
+        position: "relative",
+        bottom: "20%",
+      }}
+    >
+      <OrbitControls
+        enableZoom={true}
+        enablePan={false}
+        enableRotate={true}
+        zoomSpeed={0.5}
+        minPolarAngle={Math.PI / 2}
+        maxPolarAngle={Math.PI / 2}
+      />
+      <ambientLight intensity={4.0} />
+      <Model position={[0, -2, 0]} />
     </Canvas>
   );
 }

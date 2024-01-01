@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import DeleteUser from "./DeleteUser";
 import AddUser from "./AddUser";
-import "../styles/user.css";
+import "../styles/home.css";
 import AddComment from "./AddComment";
+import CanvasContainer from "./three.js/Canvas";
 
 const formatDate = (dateString) => {
   const options = { year: "numeric", month: "long", day: "numeric" };
@@ -46,7 +47,6 @@ const UserList = () => {
       if (response.ok) {
         const data = await response.json();
         setUsers((prevUsers) => [...prevUsers, data.user]);
-
       } else {
         console.error("Error adding user:", response.statusText);
 
@@ -73,6 +73,9 @@ const UserList = () => {
 
   return (
     <div>
+      <div className="threeJs">
+        <CanvasContainer />
+      </div>
       <AddUser onAddUser={handleAddUser} />
 
       {users.map((user) => (
