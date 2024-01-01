@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import "../styles/user.css";
+import "../styles/home.css";
 import Cleave from "cleave.js/react";
 import "cleave.js/dist/addons/cleave-phone.us";
 
