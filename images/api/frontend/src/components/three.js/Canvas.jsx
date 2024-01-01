@@ -23,7 +23,7 @@ function CanvasContainer() {
         minPolarAngle={Math.PI / 2}
         maxPolarAngle={Math.PI / 2}
       />
-      <ambientLight intensity={4.0} />
+      <ambientLight intensity={3.5} />
       <Model position={[0, -2, 0]} />
     </Canvas>
   );

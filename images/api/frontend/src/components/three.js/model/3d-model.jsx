@@ -6,14 +6,23 @@ License: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 Source: https://sketchfab.com/3d-models/f-you-all-fd73942e5c45469f87d95f53e4576823
 Title: F... you All!
 */
-
-import React from "react";
+import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 
 const BirthdayModel = (props) => {
   const { nodes, materials } = useGLTF("model/3d-model.glb");
+
+  const groupRef = useRef();
+
+  // Rotate animation
+  useFrame(() => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y += 0.005; // Adjust the rotation speed as needed
+    }
+  });
   return (
-    <group {...props} dispose={null}>
+    <group ref={groupRef} {...props} dispose={null}>
       <group rotation={[-Math.PI / 2.2, 0, 0]} scale={5}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group
