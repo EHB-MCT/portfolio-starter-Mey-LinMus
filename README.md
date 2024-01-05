@@ -22,7 +22,6 @@ docker-compose up --build
 ## Features
 
 - **User Management:**
-
   - Retrieve a list of users.
   - Add a new user.
   - Update user information.
