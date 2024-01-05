@@ -22,7 +22,6 @@ docker-compose up --build
 ## Features
 
 - **User Management:**
-
   - Retrieve a list of users.
   - Add a new user.
   - Update user information.
@@ -34,6 +33,13 @@ docker-compose up --build
   - Add a new comment for a user.
   - Update a comment.
   - Delete a comment.
+
+### Frontend 
+- Showing all users (name,birthday and age )
+- Adding users
+- Deleting users
+- Adding comments to users
+- 3D model
 
 # Endpoints
 
