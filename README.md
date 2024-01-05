@@ -35,6 +35,13 @@ docker-compose up --build
   - Update a comment.
   - Delete a comment.
 
+### Frontend 
+- Showing all users (name,birthday and age )
+- Adding users
+- Deleting users
+- Adding comments to users
+- 3D model
+
 # Endpoints
 
 ## Users

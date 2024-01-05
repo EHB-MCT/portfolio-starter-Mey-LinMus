@@ -18,7 +18,7 @@ const BirthdayModel = (props) => {
   // Rotate animation
   useFrame(() => {
     if (groupRef.current) {
-      groupRef.current.rotation.y += 0.005; // Adjust the rotation speed as needed
+      groupRef.current.rotation.y += 0.005; 
     }
   });
   return (
